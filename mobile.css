@@ -81,20 +81,31 @@ body.mobile-admin.is-standalone {
   height: 100dvh;
   opacity: 0;
   pointer-events: none;
-  transform: translateY(12px) scale(0.98);
-  transition: opacity 0.18s ease, transform 0.18s ease;
+  transition: opacity 0.18s ease;
   z-index: 55;
   border-right: none;
   box-shadow: none;
-  overflow-y: auto;
-  padding: 82px 14px 20px;
-  background: #ffffff;
+  overflow: hidden;
+  padding: 0;
+  background: transparent;
 }
 
 .mobile-admin .mobile-nav-drawer.open {
   opacity: 1;
   pointer-events: auto;
-  transform: translateY(0) scale(1);
+}
+
+.mobile-nav-sheet {
+  position: absolute;
+  top: 78px;
+  left: 14px;
+  width: min(86vw, 340px);
+  max-height: calc(100dvh - 92px);
+  overflow-y: auto;
+  padding: 0 0 12px;
+  border-radius: 30px;
+  background: #ffffff;
+  box-shadow: 0 22px 44px rgba(20, 41, 29, 0.14);
 }
 
 .mobile-drawer-brand {
@@ -123,6 +134,7 @@ body.mobile-admin.is-standalone {
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 12px;
+  padding: 0 14px 2px;
 }
 
 .mobile-admin .nav-item {
@@ -395,6 +407,11 @@ body.mobile-admin.is-standalone {
 }
 
 @media (max-width: 360px) {
+  .mobile-nav-sheet {
+    width: calc(100vw - 20px);
+    left: 10px;
+  }
+
   .sticky-footer-inner {
     grid-template-columns: 1fr;
   }
