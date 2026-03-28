@@ -58,4 +58,9 @@
       setAccountOpen(false);
     }
   });
+
+  window.addEventListener("msefilter:tabchange", () => {
+    setMenuOpen(false);
+    setAccountOpen(false);
+  });
 })();

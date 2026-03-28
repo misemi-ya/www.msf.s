@@ -1285,6 +1285,7 @@
     activeTabId = tabId;
     els.navItems.forEach((item) => item.classList.toggle("active", item.dataset.tab === tabId));
     els.tabs.forEach((tab) => tab.classList.toggle("active", tab.dataset.tab === tabId));
+    window.dispatchEvent(new CustomEvent("msefilter:tabchange", { detail: { tabId } }));
   };
 
   const init = async () => {
