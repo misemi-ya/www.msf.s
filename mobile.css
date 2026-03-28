@@ -1,0 +1,213 @@
+﻿body.mobile-admin {
+  background:
+    radial-gradient(circle at top, rgba(78, 205, 140, 0.16), transparent 28%),
+    linear-gradient(180deg, #f7fbf8 0%, #edf5ef 100%);
+}
+
+.mobile-menu-toggle {
+  position: fixed;
+  top: 14px;
+  left: 14px;
+  z-index: 60;
+  width: 52px;
+  height: 52px;
+  border: 1px solid rgba(15, 37, 27, 0.12);
+  border-radius: 16px;
+  background: rgba(255, 255, 255, 0.96);
+  box-shadow: 0 18px 40px rgba(22, 46, 32, 0.12);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  gap: 5px;
+  backdrop-filter: blur(12px);
+}
+
+.mobile-menu-toggle span {
+  display: block;
+  width: 20px;
+  height: 2px;
+  border-radius: 999px;
+  background: #173021;
+}
+
+.mobile-nav-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(12, 22, 17, 0.32);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.22s ease;
+  z-index: 49;
+}
+
+.mobile-nav-backdrop.open {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.mobile-admin .shell {
+  display: block;
+}
+
+.mobile-admin .mobile-nav-drawer {
+  position: fixed;
+  inset: 0 auto 0 0;
+  width: min(82vw, 320px);
+  height: 100vh;
+  transform: translateX(-104%);
+  transition: transform 0.24s ease;
+  z-index: 55;
+  border-right: 1px solid rgba(15, 37, 27, 0.08);
+  box-shadow: 24px 0 48px rgba(11, 28, 20, 0.12);
+  overflow-y: auto;
+  padding-top: 76px;
+}
+
+.mobile-admin .mobile-nav-drawer.open {
+  transform: translateX(0);
+}
+
+.mobile-admin .content {
+  padding: 84px 14px 132px;
+}
+
+.mobile-admin .topbar {
+  position: sticky;
+  top: 10px;
+  z-index: 20;
+  align-items: flex-start;
+  gap: 14px;
+  padding: 18px 18px 16px 68px;
+  border-radius: 24px;
+  background: rgba(255, 255, 255, 0.88);
+  backdrop-filter: blur(16px);
+}
+
+.mobile-admin .topbar h1 {
+  font-size: 1.5rem;
+}
+
+.mobile-admin .topbar-actions {
+  width: 100%;
+  display: grid;
+  grid-template-columns: 1fr;
+}
+
+.mobile-admin .status-card,
+.mobile-admin .status-card.compact {
+  width: 100%;
+}
+
+.mobile-admin .grid,
+.mobile-admin .grid.two-col,
+.mobile-admin .grid.three-col,
+.mobile-admin .summary-grid,
+.mobile-admin .row.two-inputs,
+.mobile-admin .row.three-inputs,
+.mobile-admin .row.time-row,
+.mobile-admin .row {
+  grid-template-columns: 1fr;
+  flex-direction: column;
+}
+
+.mobile-admin .card,
+.mobile-admin .lock-card,
+.mobile-admin .device-info-card,
+.mobile-admin .site-history-card {
+  border-radius: 24px;
+}
+
+.mobile-admin .card {
+  padding: 18px;
+}
+
+.mobile-admin .field input,
+.mobile-admin .field select,
+.mobile-admin .field textarea,
+.mobile-admin button {
+  font-size: 16px;
+}
+
+.mobile-admin .bulk-box,
+.mobile-admin .result-box {
+  padding: 14px;
+  border-radius: 20px;
+}
+
+.mobile-admin .category-group-header {
+  padding: 18px 16px;
+}
+
+.mobile-admin .category-items {
+  grid-template-columns: 1fr;
+}
+
+.mobile-admin .site-history-meta {
+  grid-template-columns: 1fr 1fr;
+}
+
+.mobile-admin .sticky-footer {
+  position: fixed;
+  left: 12px;
+  right: 12px;
+  bottom: 12px;
+  z-index: 40;
+  margin: 0;
+  padding: 16px 16px calc(16px + env(safe-area-inset-bottom));
+  border-radius: 24px;
+  background: rgba(255, 255, 255, 0.95);
+  box-shadow: 0 -8px 30px rgba(14, 31, 22, 0.08);
+  backdrop-filter: blur(16px);
+}
+
+.mobile-admin .sticky-footer .row.between {
+  gap: 12px;
+}
+
+.mobile-admin .sticky-footer h2 {
+  font-size: 0.95rem;
+  margin-bottom: 4px;
+}
+
+.mobile-admin #lastSaved {
+  display: inline-flex;
+  align-items: center;
+  min-height: 40px;
+  padding: 10px 12px;
+  border-radius: 14px;
+  background: #f2f8f4;
+  color: #244632;
+}
+
+.mobile-admin .sticky-footer .row:last-child {
+  width: 100%;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+
+.mobile-admin .sticky-footer .ghost,
+.mobile-admin .sticky-footer .primary {
+  width: 100%;
+}
+
+.mobile-admin .lock-screen {
+  padding: 16px;
+}
+
+.mobile-admin .lock-card {
+  width: min(100%, 520px);
+  padding: 22px;
+}
+
+.mobile-admin .search-field {
+  width: 100%;
+}
+
+@media (min-width: 981px) {
+  .mobile-menu-toggle,
+  .mobile-nav-backdrop {
+    display: none;
+  }
+}
