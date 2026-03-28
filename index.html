@@ -5,10 +5,17 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>店大教育部作成 - ミセフィルタ スマホ管理画面</title>
     <link rel="icon" href="t.png" sizes="32x32" />
+    <meta name="theme-color" content="#4ec78d" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+    <meta name="apple-mobile-web-app-title" content="ミセフィルタ" />
+    <meta name="format-detection" content="telephone=no" />
+    <link rel="apple-touch-icon" href="t.png" />
+    <link rel="manifest" href="manifest.webmanifest" />
     <link rel="stylesheet" href="app.css" />
     <link rel="stylesheet" href="mobile.css" />
   </head>
-  <body class="mobile-admin">
+  <body class="mobile-admin app-shell">
     <button id="menuToggle" class="mobile-menu-toggle" type="button" aria-label="メニューを開く">
       <span></span><span></span><span></span>
     </button>
@@ -58,7 +65,7 @@
       </aside>
 
       <main class="content">
-        <header class="topbar">
+        <div class="mobile-app-chrome"><div class="mobile-app-pill"></div><p class="mobile-app-caption">ホーム画面から開くとアプリのように使えます</p></div><header class="topbar">
           <div>
             <p class="eyebrow">Web Filter Console</p>
             <h1>フィルター管理</h1>
@@ -252,6 +259,7 @@
       <script src="mobile-nav.js"></script>
   </body>
 </html>
+
 
 
 

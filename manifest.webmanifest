@@ -1,0 +1,25 @@
+﻿{
+  "name": "店大教育部作成 - ミセフィルタ スマホ管理画面",
+  "short_name": "ミセフィルタ",
+  "description": "スマートフォン向けのミセフィルタ管理画面です。",
+  "start_url": "./index.html",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait-primary",
+  "background_color": "#edf5ef",
+  "theme_color": "#4ec78d",
+  "icons": [
+    {
+      "src": "./t.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "./t.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
+}

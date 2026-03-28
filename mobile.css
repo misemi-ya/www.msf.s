@@ -211,3 +211,69 @@
     display: none;
   }
 }
+
+html, body.mobile-admin {
+  min-height: 100%;
+}
+
+body.mobile-admin.app-shell {
+  overscroll-behavior-y: contain;
+  -webkit-tap-highlight-color: transparent;
+}
+
+body.mobile-admin.is-standalone {
+  padding-top: env(safe-area-inset-top);
+}
+
+.mobile-app-chrome {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 8px 0 14px;
+}
+
+.mobile-app-pill {
+  width: 96px;
+  height: 5px;
+  border-radius: 999px;
+  background: rgba(19, 48, 33, 0.12);
+}
+
+.mobile-app-caption {
+  margin: 0;
+  font-size: 0.8rem;
+  letter-spacing: 0.02em;
+  color: #507361;
+}
+
+.mobile-admin .topbar {
+  box-shadow: 0 18px 40px rgba(18, 42, 29, 0.08);
+}
+
+.mobile-admin .nav-item {
+  min-height: 52px;
+  border-radius: 16px;
+}
+
+.mobile-admin .card,
+.mobile-admin .site-history-card,
+.mobile-admin .device-info-card,
+.mobile-admin .bulk-box,
+.mobile-admin .result-box,
+.mobile-admin #lastSaved {
+  box-shadow: 0 18px 38px rgba(20, 41, 29, 0.08);
+}
+
+.mobile-admin .field input,
+.mobile-admin .field select,
+.mobile-admin .field textarea {
+  border-radius: 16px;
+}
+
+.mobile-admin .primary,
+.mobile-admin .ghost {
+  min-height: 50px;
+  border-radius: 16px;
+}
