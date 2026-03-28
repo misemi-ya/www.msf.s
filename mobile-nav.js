@@ -10,6 +10,7 @@
     drawer.classList.toggle("open", open);
     backdrop.classList.remove("open");
     document.body.classList.toggle("mobile-nav-open", open);
+    document.body.style.overflow = open ? "hidden" : "";
   };
 
   const setAccountOpen = (open) => {
@@ -38,6 +39,7 @@
   drawer.querySelectorAll(".nav-item").forEach((item) => {
     item.addEventListener("click", () => {
       setMenuOpen(false);
+      setAccountOpen(false);
     });
   });
 

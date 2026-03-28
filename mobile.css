@@ -79,8 +79,10 @@ body.mobile-admin.is-standalone {
   inset: 0;
   width: 100vw;
   height: 100dvh;
-  transform: translateX(-104%);
-  transition: transform 0.24s ease;
+  opacity: 0;
+  pointer-events: none;
+  transform: translateY(12px) scale(0.98);
+  transition: opacity 0.18s ease, transform 0.18s ease;
   z-index: 55;
   border-right: none;
   box-shadow: none;
@@ -90,7 +92,9 @@ body.mobile-admin.is-standalone {
 }
 
 .mobile-admin .mobile-nav-drawer.open {
-  transform: translateX(0);
+  opacity: 1;
+  pointer-events: auto;
+  transform: translateY(0) scale(1);
 }
 
 .mobile-drawer-brand {
