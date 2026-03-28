@@ -8,14 +8,14 @@
 
   const setMenuOpen = (open) => {
     drawer.classList.toggle("open", open);
-    backdrop.classList.toggle("open", open);
+    backdrop.classList.remove("open");
     document.body.classList.toggle("mobile-nav-open", open);
   };
 
   const setAccountOpen = (open) => {
     if (!accountMenu) return;
     accountMenu.classList.toggle("open", open);
-    backdrop.classList.toggle("open", drawer.classList.contains("open"));
+    backdrop.classList.remove("open");
   };
 
   menuToggle.addEventListener("click", (event) => {
@@ -42,6 +42,9 @@
   });
 
   document.addEventListener("click", (event) => {
+    if (drawer.classList.contains("open") && !drawer.contains(event.target) && !menuToggle.contains(event.target)) {
+      setMenuOpen(false);
+    }
     if (accountMenu && accountMenu.classList.contains("open") && !accountMenu.contains(event.target) && !accountToggle?.contains(event.target)) {
       setAccountOpen(false);
     }
