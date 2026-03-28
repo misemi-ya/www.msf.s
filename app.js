@@ -6,6 +6,7 @@
   const SCHOOLS_KEY = "msefilter-schools";
   const CHANGE_HISTORY_KEY = "msefilter-site-change-history";
   const BLOCK_REPORT_KEY = "msefilter-block-report";
+  const ACCESS_REPORT_KEY = "msefilter-access-report";
   const cloud = globalThis.MSEFILTER_CLOUD;
 
   const DEFAULTS = {
@@ -92,10 +93,13 @@
     logList: document.getElementById("logList"),
     siteHistoryList: document.getElementById("siteHistoryList"),
     blockReportList: document.getElementById("blockReportList"),
+    accessReportList: document.getElementById("accessReportList"),
     reportSearch: document.getElementById("reportSearch"),
     blockReportSearch: document.getElementById("blockReportSearch"),
+    accessReportSearch: document.getElementById("accessReportSearch"),
     exportUrlReportBtn: document.getElementById("exportUrlReportBtn"),
     exportBlockReportBtn: document.getElementById("exportBlockReportBtn"),
+    exportAccessReportBtn: document.getElementById("exportAccessReportBtn"),
     deviceSummary: document.getElementById("deviceSummary"),
     deviceTimeline: document.getElementById("deviceTimeline"),
     studentCategoryContainer: document.getElementById("studentCategoryContainer"),
@@ -246,6 +250,7 @@
   const saveSchools = async (schools) => cloud.saveSchools(schools, DEFAULTS);
   const loadChangeHistory = async () => cloud.getChangeHistory(DEFAULTS, { fresh: true, minIntervalMs: 1500 });
   const loadBlockReports = async () => cloud.getBlockReports(DEFAULTS, { fresh: true, minIntervalMs: 1500 });
+  const loadAccessReports = async () => cloud.getAccessReports(DEFAULTS, { fresh: true, minIntervalMs: 1500 });
   const readLocalJson = (key, fallback) => {
     try {
       const raw = localStorage.getItem(key);
@@ -894,6 +899,53 @@
     });
   };
 
+
+  const renderAccessReports = async () => {
+    const search = String(els.accessReportSearch?.value || "").trim().toLowerCase();
+    const reports = (await loadAccessReports()).filter((item) => {
+      if (!isSuper(currentSession) && item.schoolId !== currentSession?.schoolId) return false;
+      const haystack = `${item.url} ${item.schoolId} ${item.userId} ${item.deviceLabel} ${item.categoryLabel}`.toLowerCase();
+      return matchesSearch(haystack, search);
+    });
+    els.accessReportList.innerHTML = "";
+    if (reports.length === 0) {
+      const empty = document.createElement("div");
+      empty.className = "site-history-card";
+      empty.textContent = "閲覧履歴はまだありません。";
+      els.accessReportList.appendChild(empty);
+      return;
+    }
+    reports.slice(0, 100).forEach((item) => {
+      const card = document.createElement("article");
+      card.className = "site-history-card";
+      const title = document.createElement("h3");
+      title.textContent = item.url || "-";
+      const meta = document.createElement("div");
+      meta.className = "site-history-meta";
+      meta.innerHTML = `<p><strong>学校</strong><br>${item.schoolId || "-"}</p><p><strong>ユーザー</strong><br>${item.userId || "-"}</p><p><strong>端末</strong><br>${item.deviceLabel || "-"}</p><p><strong>日時</strong><br>${item.accessedAt ? new Date(item.accessedAt).toLocaleString("ja-JP") : "-"}</p>`;
+      const list = document.createElement("ul");
+      list.className = "history-list";
+      const category = document.createElement("li");
+      category.textContent = `カテゴリ: ${item.categoryLabel || "-"}`;
+      list.appendChild(category);
+      const actions = document.createElement("div");
+      actions.className = "row";
+      const openButton = document.createElement("button");
+      openButton.type = "button";
+      openButton.className = "ghost";
+      openButton.textContent = "このページを開く";
+      openButton.addEventListener("click", () => {
+        if (!item.url) return;
+        window.open(item.url, "_blank", "noopener,noreferrer");
+      });
+      actions.appendChild(openButton);
+      card.appendChild(title);
+      card.appendChild(meta);
+      card.appendChild(list);
+      card.appendChild(actions);
+      els.accessReportList.appendChild(card);
+    });
+  };
   const renderDevices = async () => {
     const [schools, users, history] = await Promise.all([loadSchools(), loadUsers(), loadChangeHistory()]);
     els.deviceSummary.innerHTML = "";
@@ -979,6 +1031,7 @@
     await renderUsers();
     await renderSiteHistory();
     await renderBlockReports();
+    await renderAccessReports();
     await renderDevices();
   });
 
@@ -1012,6 +1065,7 @@
     await renderAccessControls();
     await renderUsers();
     await renderBlockReports();
+    await renderAccessReports();
     await renderDevices();
   });
 
@@ -1108,6 +1162,7 @@
   els.userSearch.addEventListener("input", () => renderUsers());
   els.reportSearch.addEventListener("input", () => renderSiteHistory());
   els.blockReportSearch.addEventListener("input", () => renderBlockReports());
+  els.accessReportSearch.addEventListener("input", () => renderAccessReports());
   manualSettingInputs.forEach((element) => {
     element.addEventListener("input", () => {
       if (element === els.displayName) els.brandTitle.textContent = els.displayName.value.trim() || DEFAULTS.displayName;
@@ -1143,6 +1198,12 @@
     reports.forEach((item) => rows.push([item.url, item.schoolId, item.userId, item.deviceLabel, item.reason, item.categoryLabel, formatDateTime(item.blockedAt)]));
     downloadCsv(`block-report-${new Date().toISOString().slice(0, 10)}.csv`, rows);
   });
+  els.exportAccessReportBtn.addEventListener("click", async () => {
+    const reports = (await loadAccessReports()).filter((item) => isSuper(currentSession) || item.schoolId === currentSession?.schoolId);
+    const rows = [["URL", "学校", "ユーザー", "端末", "カテゴリ", "日時"]];
+    reports.forEach((item) => rows.push([item.url, item.schoolId, item.userId, item.deviceLabel, item.categoryLabel, formatDateTime(item.accessedAt)]));
+    downloadCsv(`access-report-${new Date().toISOString().slice(0, 10)}.csv`, rows);
+  });
 
 
   const startLiveSync = () => {
@@ -1154,6 +1215,7 @@
       await renderUsers();
       await renderSiteHistory();
       await renderBlockReports();
+    await renderAccessReports();
       await renderDevices();
     }, 1200);
   };
@@ -1174,6 +1236,7 @@
       await renderUsers();
       await renderSiteHistory();
       await renderBlockReports();
+    await renderAccessReports();
       await renderDevices();
     }
     startLiveSync();
@@ -1188,6 +1251,8 @@
 
   init();
 })();
+
+
 
 
 

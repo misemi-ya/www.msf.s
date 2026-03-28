@@ -1,4 +1,4 @@
-(() => {
+﻿(() => {
   const CLOUD_BASE_URL = "https://loilo-9c765-default-rtdb.asia-southeast1.firebasedatabase.app";
 
   const normalizeSettings = (settings, defaults) => ({ ...(defaults || {}), ...(settings || {}) });
@@ -26,6 +26,7 @@
     schools: Array.isArray(core?.schools) ? core.schools : [],
     changeHistory: normalizeChangeHistory(core?.changeHistory),
     blockReports: Array.isArray(core?.blockReports) ? core.blockReports.slice(0, 100) : [],
+    accessReports: Array.isArray(core?.accessReports) ? core.accessReports.slice(0, 300) : [],
   });
 
   const fetchCloudJson = async (path, options = {}) => {
@@ -80,11 +81,13 @@
     getSchools: async (defaults, options = {}) => (options.fresh ? await syncCoreData(defaults, options) : await readCloudCore(defaults)).schools,
     getChangeHistory: async (defaults, options = {}) => (options.fresh ? await syncCoreData(defaults, options) : await readCloudCore(defaults)).changeHistory,
     getBlockReports: async (defaults, options = {}) => (options.fresh ? await syncCoreData(defaults, options) : await readCloudCore(defaults)).blockReports,
+    getAccessReports: async (defaults, options = {}) => (options.fresh ? await syncCoreData(defaults, options) : await readCloudCore(defaults)).accessReports,
     saveSettings: async (settings, defaults) => (await updateCore(defaults, (core) => ({ ...core, settings }))).settings,
     saveUsers: async (users, defaults) => (await updateCore(defaults, (core) => ({ ...core, users: Array.isArray(users) ? users : [] }))).users,
     saveSchools: async (schools, defaults) => (await updateCore(defaults, (core) => ({ ...core, schools: Array.isArray(schools) ? schools : [] }))).schools,
     saveChangeHistory: async (changeHistory, defaults) => (await updateCore(defaults, (core) => ({ ...core, changeHistory }))).changeHistory,
     saveBlockReports: async (blockReports, defaults) => (await updateCore(defaults, (core) => ({ ...core, blockReports: Array.isArray(blockReports) ? blockReports.slice(0, 100) : [] }))).blockReports,
+    saveAccessReports: async (accessReports, defaults) => (await updateCore(defaults, (core) => ({ ...core, accessReports: Array.isArray(accessReports) ? accessReports.slice(0, 300) : [] }))).accessReports,
   };
 
   if (typeof self !== "undefined") self.MSEFILTER_CLOUD = api;

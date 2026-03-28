@@ -65,6 +65,7 @@
           <button class="nav-item" data-tab="categories">カテゴリ設定</button>
           <button class="nav-item" data-tab="reports">URLレポート</button>
           <button class="nav-item" data-tab="blockReports">ブロックレポート</button>
+        <button class="nav-item" data-tab="accessReports">閲覧履歴</button>
           <button class="nav-item" data-tab="devices">デバイス</button>
           <button class="nav-item" data-tab="settings">設定</button>
         </div>
@@ -206,6 +207,19 @@
           </section>
         </section>
 
+        
+        <section class="tab" data-tab="accessReports">
+          <section class="card wide">
+            <h2>閲覧履歴</h2>
+            <p class="muted">どの端末で、どの学校の誰が、いつ、どのサイトにアクセスしたかを新しい順で表示します。</p>
+            <div class="row">
+              <label class="field search-field"><span>検索</span><input id="accessReportSearch" type="text" placeholder="URL、学校、ID、端末で検索" /></label>
+              <button id="exportAccessReportBtn" class="ghost" type="button">CSVを出力</button>
+            </div>
+            <div id="accessReportList" class="site-history-list"></div>
+          </section>
+        </section>
+
         <section class="tab" data-tab="devices">
           <div id="deviceSummary" class="grid three-col"></div>
           <section class="card wide">
@@ -270,3 +284,4 @@
     <script src="pwa.js"></script>
   </body>
 </html>
+
