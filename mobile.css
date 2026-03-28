@@ -455,3 +455,68 @@ body.mobile-admin.is-standalone {
 .mobile-nav-grid {
   margin-top: 14px;
 }
+
+html {
+  -webkit-text-size-adjust: 100%;
+  height: -webkit-fill-available;
+}
+
+body.mobile-admin {
+  width: 100%;
+  overflow-x: hidden;
+  min-height: 100dvh;
+  min-height: -webkit-fill-available;
+}
+
+.mobile-menu-toggle,
+.mobile-account-toggle,
+.mobile-admin .mobile-nav-drawer,
+.mobile-admin .topbar,
+.mobile-account-menu,
+.mobile-admin .sticky-footer {
+  -webkit-backdrop-filter: blur(16px);
+}
+
+.mobile-admin .mobile-nav-drawer {
+  height: 100dvh;
+  min-height: -webkit-fill-available;
+}
+
+.mobile-drawer-brand,
+.mobile-admin .nav-item,
+.mobile-admin .topbar,
+.mobile-account-menu,
+.mobile-admin .status-card,
+.mobile-admin .card,
+.mobile-admin .sticky-footer {
+  min-width: 0;
+}
+
+.mobile-admin .field input,
+.mobile-admin .field select,
+.mobile-admin .field textarea,
+.mobile-admin .primary,
+.mobile-admin .ghost,
+.mobile-menu-toggle,
+.mobile-account-toggle {
+  -webkit-appearance: none;
+  appearance: none;
+}
+
+.mobile-admin .shell,
+.mobile-admin .content,
+.mobile-nav-grid,
+.mobile-title-row,
+.sticky-footer-inner {
+  transform: translateZ(0);
+}
+
+@supports (-webkit-touch-callout: none) {
+  .mobile-admin .topbar,
+  .mobile-account-menu,
+  .mobile-admin .sticky-footer,
+  .mobile-drawer-brand,
+  .mobile-admin .nav-item {
+    border-color: rgba(15, 37, 27, 0.1);
+  }
+}
