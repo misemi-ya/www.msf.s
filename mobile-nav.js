@@ -8,14 +8,14 @@
 
   const setMenuOpen = (open) => {
     drawer.classList.toggle("open", open);
-    backdrop.classList.toggle("open", open || accountMenu?.classList.contains("open"));
+    backdrop.classList.toggle("open", open);
     document.body.classList.toggle("mobile-nav-open", open);
   };
 
   const setAccountOpen = (open) => {
     if (!accountMenu) return;
     accountMenu.classList.toggle("open", open);
-    backdrop.classList.toggle("open", open || drawer.classList.contains("open"));
+    backdrop.classList.toggle("open", drawer.classList.contains("open"));
   };
 
   menuToggle.addEventListener("click", (event) => {

@@ -414,3 +414,44 @@ body.mobile-admin.is-standalone {
     display: none;
   }
 }
+
+.mobile-admin .mobile-nav-drawer {
+  display: flex;
+  flex-direction: column;
+}
+
+.mobile-drawer-brand {
+  position: sticky;
+  top: 0;
+  z-index: 3;
+  grid-template-columns: 64px 1fr;
+  gap: 14px;
+  width: 100%;
+  min-height: 92px;
+  padding: 16px 18px;
+  border-radius: 24px;
+  background: linear-gradient(135deg, rgba(78,199,141,0.16), rgba(255,255,255,0.98));
+  box-shadow: 0 14px 30px rgba(20, 41, 29, 0.08);
+}
+
+.mobile-drawer-brand .brand-icon {
+  width: 64px;
+  height: 64px;
+  border-radius: 20px;
+}
+
+.mobile-drawer-brand .brand-title {
+  font-size: 1.02rem;
+  line-height: 1.35;
+  word-break: break-word;
+}
+
+.mobile-drawer-brand .brand-sub {
+  margin-top: 6px;
+  font-size: 0.84rem;
+  line-height: 1.4;
+}
+
+.mobile-nav-grid {
+  margin-top: 14px;
+}
