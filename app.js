@@ -498,6 +498,7 @@
 
   const applySettingsToForm = async (settings) => {
     els.enabledToggle.checked = Boolean(settings.enabled);
+    setStatus(Boolean(settings.enabled));
     els.allowKeywords.value = settings.allowKeywords || "";
     els.blockKeywords.value = settings.blockKeywords || "";
     els.globalBlockToggle.checked = Boolean(settings.globalBlockAllStudent);
@@ -1119,7 +1120,7 @@
   els.nightToggle.addEventListener("change", () => queueSave("auto"));
   els.studentCategorySearch.addEventListener("input", () => renderCategoryGroupSet({ container: els.studentCategoryContainer, countEl: els.studentCategoryCount, blockedSet: studentBlockedSet, filterText: els.studentCategorySearch.value, openGroups: openStudentCategoryGroups }));
   els.saveBtn.addEventListener("click", async () => { await saveSettings("manual"); await addLog("設定を保存しました。"); });
-  els.resetBtn.addEventListener("click", async () => { await saveSettingsToStorage({ ...DEFAULTS }); await applySettingsToForm({ ...DEFAULTS }); clearSettingsDirty("初期値に戻しました。"); await addLog("設定を初期値に戻しました。"); });
+  if (els.resetBtn) els.resetBtn.addEventListener("click", async () => { await saveSettingsToStorage({ ...DEFAULTS }); await applySettingsToForm({ ...DEFAULTS }); clearSettingsDirty("初期値に戻しました。"); await addLog("設定を初期値に戻しました。"); });
   els.runTest.addEventListener("click", async () => {
     const url = els.testUrl.value.trim();
     if (!url) return;
@@ -1187,4 +1188,6 @@
 
   init();
 })();
+
+
 
