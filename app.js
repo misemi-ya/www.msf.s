@@ -179,6 +179,63 @@
     return merged;
   };
   const formatDateTime = (value) => value ? new Date(value).toLocaleString("ja-JP") : "-";
+  const getUrlRuleMode = (url, settings = currentSettings) => {
+    const blockedRules = [...parseLines(settings.blockedUrls || ""), ...parseLines(settings.studentBlockedUrls || "")];
+    const allowedRules = [...parseLines(settings.allowedUrls || ""), ...parseLines(settings.studentAllowedUrls || "")];
+    if (blockedRules.some((rule) => matchesUrlRule(url, rule))) return "block";
+    if (allowedRules.some((rule) => matchesUrlRule(url, rule))) return "allow";
+    return "allow";
+  };
+
+  const updateUrlRuleState = async (targetUrl, mode) => {
+    const normalizedTarget = normalizeVideoTarget(targetUrl);
+    const nextBlocked = parseLines(currentSettings.studentBlockedUrls || "").filter((rule) => !matchesUrlRule(normalizedTarget, rule));
+    const nextAllowed = parseLines(currentSettings.studentAllowedUrls || "").filter((rule) => !matchesUrlRule(normalizedTarget, rule));
+    if (mode === "block") nextBlocked.unshift(normalizedTarget);
+    else nextAllowed.unshift(normalizedTarget);
+    const nextSettings = {
+      ...currentSettings,
+      studentBlockedUrls: nextBlocked.join("\n"),
+      studentAllowedUrls: nextAllowed.join("\n"),
+    };
+    await saveSettingsToStorage(nextSettings);
+    await applySettingsToForm(nextSettings);
+    clearSettingsDirty(`閲覧ルールを${mode === "block" ? "ブロック" : "許可"}に更新しました。`);
+    await renderSiteHistory();
+    await renderBlockReports();
+    await renderAccessReports();
+  };
+
+  const buildReportSwitch = (url) => {
+    const switchEl = document.createElement("div");
+    switchEl.className = "category-mode-switch";
+    const syncMode = () => {
+      switchEl.dataset.mode = getUrlRuleMode(url, currentSettings);
+      allowButton.classList.toggle("active", switchEl.dataset.mode === "allow");
+      blockButton.classList.toggle("active", switchEl.dataset.mode === "block");
+    };
+    const allowButton = document.createElement("button");
+    allowButton.type = "button";
+    allowButton.className = "category-mode-btn";
+    allowButton.textContent = "許可";
+    allowButton.addEventListener("click", async () => {
+      await updateUrlRuleState(url, "allow");
+      syncMode();
+    });
+    const blockButton = document.createElement("button");
+    blockButton.type = "button";
+    blockButton.className = "category-mode-btn";
+    blockButton.textContent = "ブロック";
+    blockButton.addEventListener("click", async () => {
+      await updateUrlRuleState(url, "block");
+      syncMode();
+    });
+    switchEl.appendChild(allowButton);
+    switchEl.appendChild(blockButton);
+    syncMode();
+    return switchEl;
+  };
+
   const toCsv = (rows) => rows.map((row) => row.map((cell) => `"${String(cell ?? "").replace(/"/g, "\"\"")}"`).join(",")).join("\r\n");
   const downloadCsv = (filename, rows) => {
     const blob = new Blob(["\uFEFF" + toCsv(rows)], { type: "text/csv;charset=utf-8;" });
@@ -882,6 +939,7 @@
       list.appendChild(category);
       const actions = document.createElement("div");
       actions.className = "row";
+      const switchEl = buildReportSwitch(item.url);
       const openButton = document.createElement("button");
       openButton.type = "button";
       openButton.className = "ghost";
@@ -891,6 +949,7 @@
         window.open(item.url, "_blank", "noopener,noreferrer");
       });
       actions.appendChild(openButton);
+      actions.appendChild(switchEl);
       card.appendChild(title);
       card.appendChild(meta);
       card.appendChild(list);
@@ -930,6 +989,7 @@
       list.appendChild(category);
       const actions = document.createElement("div");
       actions.className = "row";
+      const switchEl = buildReportSwitch(item.url);
       const openButton = document.createElement("button");
       openButton.type = "button";
       openButton.className = "ghost";
@@ -939,6 +999,7 @@
         window.open(item.url, "_blank", "noopener,noreferrer");
       });
       actions.appendChild(openButton);
+      actions.appendChild(switchEl);
       card.appendChild(title);
       card.appendChild(meta);
       card.appendChild(list);
@@ -1251,6 +1312,9 @@
 
   init();
 })();
+
+
+
 
 
 
